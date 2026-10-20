@@ -1,0 +1,136 @@
+
+.feedback-page {
+  min-height: 75vh;
+  padding: 40px 20px;
+  background: #f5f7fb;
+}
+
+.feedback-card {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 32px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.feedback-card h1 {
+  margin: 12px 0;
+  color: #172033;
+}
+
+.feedback-card > p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.feedback-back-link,
+.feedback-dashboard-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+.feedback-dashboard-link {
+  margin: 22px 0 0;
+}
+
+.feedback-label {
+  display: block;
+  margin: 20px 0 10px;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.feedback-stars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.feedback-star {
+  padding: 2px;
+  border: none;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 38px;
+  cursor: pointer;
+}
+
+.feedback-star.selected {
+  color: #f59e0b;
+}
+
+.feedback-star:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.feedback-rating-label,
+.feedback-character-count {
+  margin: 6px 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.feedback-card textarea {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+  resize: vertical;
+}
+
+.feedback-card textarea:focus {
+  outline: 2px solid #a5b4fc;
+  border-color: #6366f1;
+}
+
+.feedback-button {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.feedback-button:hover {
+  background: #4338ca;
+}
+
+.feedback-notice {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.feedback-message {
+  margin-top: 16px;
+  color: #166534;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .feedback-page {
+    padding: 20px 12px;
+  }
+
+  .feedback-card {
+    padding: 22px 16px;
+  }
+}

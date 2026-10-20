@@ -1,0 +1,159 @@
+
+.admin-feedback-page {
+  padding: 32px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #172033;
+}
+
+.admin-feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.admin-feedback-header h1 {
+  margin: 8px 0;
+}
+
+.admin-feedback-header p {
+  color: #64748b;
+}
+
+.admin-feedback-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.admin-feedback-stat {
+  padding: 22px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.admin-feedback-stat span {
+  display: block;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.admin-feedback-stat strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 28px;
+}
+
+.admin-feedback-section {
+  margin-bottom: 28px;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.admin-feedback-section h2 {
+  margin-top: 0;
+}
+
+.admin-feedback-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.admin-feedback-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-feedback-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-feedback-table th,
+.admin-feedback-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-feedback-table th {
+  background: #f8fafc;
+}
+
+.admin-feedback-list {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-feedback-comment {
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+.admin-feedback-comment-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-feedback-comment-heading h3 {
+  margin: 0 0 8px;
+}
+
+.admin-feedback-comment-heading p {
+  margin: 4px 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.admin-feedback-comment-heading strong {
+  color: #d97706;
+}
+
+.admin-feedback-comment-text {
+  margin: 18px 0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.admin-feedback-comment small {
+  color: #64748b;
+}
+
+.admin-feedback-footer {
+  padding: 16px 0;
+}
+
+.admin-feedback-footer a {
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  .admin-feedback-page {
+    padding: 20px 12px;
+  }
+
+  .admin-feedback-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-feedback-section {
+    padding: 16px;
+  }
+}

@@ -1,0 +1,335 @@
+
+/* ========================================
+   ADMIN ANNOUNCEMENTS PAGE
+======================================== */
+
+.announcements-page {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  padding: 32px 0 48px;
+  color: #1e293b;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+/* Page header */
+
+.announcements-header {
+  position: relative;
+  overflow: hidden;
+  padding: 36px;
+  margin-bottom: 28px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #172554, #1d4ed8, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(30, 64, 175, 0.18);
+}
+
+.announcements-header > p:first-child {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.announcements-header h1 {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.announcements-header > p:last-child {
+  max-width: 650px;
+  margin: 0;
+  color: #dbeafe;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* Create announcement section */
+
+.announcement-form-section,
+.announcement-list-section {
+  margin-bottom: 28px;
+  padding: 28px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.05);
+}
+
+.announcement-form-section h2,
+.announcement-list-section h2 {
+  margin: 0 0 22px;
+  color: #0f172a;
+  font-size: 23px;
+  font-weight: 750;
+}
+
+/* Form layout */
+
+.announcement-form-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.announcement-form-section label {
+  margin-top: 8px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.announcement-form-section input,
+.announcement-form-section select,
+.announcement-form-section textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  outline: none;
+  background: #f8fafc;
+  color: #0f172a;
+  font: inherit;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.announcement-form-section textarea {
+  min-height: 130px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.announcement-form-section input:focus,
+.announcement-form-section select:focus,
+.announcement-form-section textarea:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.announcement-form-section input::placeholder,
+.announcement-form-section textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Publish button */
+
+.announcement-form-section button {
+  align-self: flex-start;
+  margin-top: 12px;
+  padding: 13px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.announcement-form-section button:hover {
+  transform: translateY(-2px);
+  background: #1d4ed8;
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.22);
+}
+
+/* Status messages */
+
+.announcement-form-section [role="status"] {
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Search and category filters */
+
+.announcement-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.announcement-filters input,
+.announcement-filters select {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  outline: none;
+  background: #f8fafc;
+  color: #0f172a;
+  font: inherit;
+  font-size: 14px;
+}
+
+.announcement-filters input {
+  flex: 2 1 240px;
+}
+
+.announcement-filters select {
+  flex: 1 1 180px;
+}
+
+.announcement-filters input:focus,
+.announcement-filters select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.announcement-list-section > p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Published announcement cards */
+
+.announcement-card {
+  position: relative;
+  margin-top: 18px;
+  padding: 22px;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #2563eb;
+  border-radius: 12px;
+  background: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.announcement-card:hover {
+  transform: translateY(-2px);
+  border-color: #bfdbfe;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.07);
+}
+
+.announcement-card > p:first-child {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.announcement-card h3 {
+  margin: 0 0 10px;
+  color: #0f172a;
+  font-size: 19px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.announcement-card > p:not(:first-child) {
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+
+.announcement-card small {
+  display: block;
+  margin-top: 14px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+/* Delete button */
+
+.announcement-card > div {
+  margin-top: 18px;
+}
+
+.announcement-card button {
+  padding: 9px 15px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fff1f2;
+  color: #b91c1c;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.announcement-card button:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+/* Back to dashboard link */
+
+.announcements-page > p:last-child {
+  margin-top: 24px;
+}
+
+.announcements-page > p:last-child a {
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  color: #1d4ed8;
+  background: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.announcements-page > p:last-child a:hover {
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+
+/* Keyboard accessibility */
+
+.announcements-page button:focus-visible,
+.announcements-page a:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+/* Responsive layout */
+
+@media (max-width: 600px) {
+  .announcements-page {
+    width: 94%;
+    padding-top: 18px;
+  }
+
+  .announcements-header {
+    padding: 25px 20px;
+    border-radius: 14px;
+  }
+
+  .announcements-form-section,
+  .announcement-list-section {
+    padding: 20px 16px;
+  }
+
+  .announcement-form-section button {
+    width: 100%;
+  }
+
+  .announcement-card {
+    padding: 17px;
+  }
+}
