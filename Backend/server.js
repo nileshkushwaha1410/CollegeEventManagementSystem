@@ -10,7 +10,14 @@ const registrationRoutes = require("./routes/registrations");
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://college-event-management-system-three.vercel.app",
+    ],
+  })
+);
 app.use(express.json());
 app.use("/api/events", eventRoutes);
 app.use("/api/auth", authRoutes);
