@@ -20,7 +20,7 @@ function Login() {
     try {
       // First, try logging in through the backend.
       const response = await fetch(
-        "http://localhost:5000/api/auth/login",
+  "https://college-event-management-system-api.onrender.com/api/auth/login",
         {
           method: "POST",
           headers: {
