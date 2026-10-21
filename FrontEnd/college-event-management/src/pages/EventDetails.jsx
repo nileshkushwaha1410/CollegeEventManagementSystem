@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useEvents } from "../context/EventContext";
 
-const API_URL = "http://localhost:5000/api/registrations";
+const API_URL = "https://college-event-management-system-api.onrender.com/api/registrations";
 
 function readCurrentUser() {
   try {
