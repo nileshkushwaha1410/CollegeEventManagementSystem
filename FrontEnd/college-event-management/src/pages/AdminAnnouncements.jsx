@@ -185,7 +185,7 @@ const filteredAnnouncements = announcements.filter((item) => {
         {announcements.length === 0 ? (
           <p>No announcements published yet.</p>
         ) : (
-          announcements.map((item) => (
+         filteredAnnouncements.map((item) => (
             <article
               className="announcement-card"
               key={item.id}
