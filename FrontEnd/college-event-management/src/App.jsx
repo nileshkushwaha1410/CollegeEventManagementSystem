@@ -24,10 +24,17 @@ import AdminRegistrations from "./pages/AdminRegistrations";
 
 import { EventProvider } from "./context/EventContext";
 
+import { useState } from "react";
+import WelcomeScreen from "./components/WelcomeScreen";
+
 function App() {
+  const [showWelcome, setShowWelcome] = useState(true);
   return (
     <BrowserRouter>
       <EventProvider>
+        {showWelcome && (
+    <WelcomeScreen onEnter={() => setShowWelcome(false)} />
+  )}
         <Routes>
           {/* Homepage */}
           <Route path="/" element={<Home />} />
