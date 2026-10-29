@@ -2,9 +2,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+const API_URL =
+  "https://college-event-management-system-api.onrender.com/api/auth/login";
+
 function Login() {
   const navigate = useNavigate();
 
+  const [accountType, setAccountType] = useState("student");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -13,95 +17,78 @@ function Login() {
   async function handleLogin(e) {
     e.preventDefault();
     setMessage("");
-    setLoading(true);
 
     const normalizedEmail = email.trim().toLowerCase();
 
+    if (!/^[^\s@]+@(aktu\.edu\.in|gmail\.com)$/i.test(normalizedEmail)) {
+      setMessage("Use an @aktu.edu.in or @gmail.com email address.");
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      // First, try logging in through the backend.
-      const response = await fetch(
-  "https://college-event-management-system-api.onrender.com/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: normalizedEmail,
-            password,
-          }),
-        }
-      );
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: normalizedEmail,
+          password,
+          accountType,
+        }),
+      });
 
       const data = await response.json();
 
-      if (response.ok) {
-        // Save the JWT for protected backend requests.
-        localStorage.setItem("authToken", data.token);
-
-        // Preserve the user format used by your existing frontend.
-        localStorage.setItem(
-          "currentUser",
-          JSON.stringify({
-            id: data.user.id,
-            name: data.user.name,
-            email: data.user.email,
-            role: data.user.role,
-          })
-        );
-
-        navigate(
-          data.user.role === "admin"
-            ? "/admin-dashboard"
-            : "/student-dashboard"
-        );
-
+      if (!response.ok) {
+        setMessage(data.message || "Unable to log in. Please try again.");
         return;
       }
 
-      // If the backend is reachable but the account is not
-      // registered there, allow an existing local student to log in.
-      if (response.status !== 401) {
-        setMessage(
-          data.message || "Unable to log in. Please try again."
-        );
+      if (!data.token || !data.user) {
+        setMessage("The server returned an incomplete login response.");
         return;
       }
 
-      const users = JSON.parse(
-        localStorage.getItem("demoUsers") || "[]"
+      // Verify that the backend account matches the selected login type.
+      if (
+        (accountType === "admin" && data.user.role !== "admin") ||
+        (accountType === "student" && data.user.role !== "student")
+      ) {
+        setMessage("This account does not match the selected login type.");
+        return;
+      }
+
+      // Save the backend authentication token.
+      localStorage.setItem("authToken", data.token);
+
+      // Preserve the user information used by the existing frontend.
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify({
+          id: data.user.id,
+          name: data.user.name,
+          email: data.user.email,
+          role: data.user.role,
+          collegeName: data.user.collegeName || "",
+          studentId: data.user.studentId || "",
+          branch: data.user.branch || "",
+          year: data.user.year || "",
+        })
       );
 
-      const user = users.find(
-        (item) =>
-          item.email?.trim().toLowerCase() === normalizedEmail &&
-          item.password === password
+      navigate(
+        data.user.role === "admin"
+          ? "/admin-dashboard"
+          : "/student-dashboard",
+        { replace: true }
       );
-
-      if (user) {
-        // This is a legacy local account, not a backend session.
-        localStorage.removeItem("authToken");
-
-        localStorage.setItem(
-          "currentUser",
-          JSON.stringify({
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: "student",
-          })
-        );
-
-        navigate("/student-dashboard");
-        return;
-      }
-
-      setMessage("Invalid email or password.");
     } catch (error) {
       console.error("Login error:", error);
-
       setMessage(
-        "Cannot connect to the server. Please check that your backend is running."
+        "Cannot connect to the server. Please check your internet connection and backend."
       );
     } finally {
       setLoading(false);
@@ -117,18 +104,58 @@ function Login() {
 
         <span className="eyebrow">WELCOME BACK</span>
         <h1>Login</h1>
+
         <p className="auth-subtitle">
-          Log in to continue exploring campus events.
+          Choose your account type to continue to CampusEvents.
         </p>
+
+        <div className="auth-account-types">
+          <button
+            type="button"
+            className={`auth-account-type ${
+              accountType === "student" ? "active" : ""
+            }`}
+            onClick={() => {
+              setAccountType("student");
+              setMessage("");
+            }}
+            disabled={loading}
+            aria-pressed={accountType === "student"}
+          >
+            🎓 Student Login
+          </button>
+
+          <button
+            type="button"
+            className={`auth-account-type ${
+              accountType === "admin" ? "active" : ""
+            }`}
+            onClick={() => {
+              setAccountType("admin");
+              setMessage("");
+            }}
+            disabled={loading}
+            aria-pressed={accountType === "admin"}
+          >
+            🏛️ Admin / College
+          </button>
+        </div>
+
+        {accountType === "admin" && (
+          <p className="auth-field-hint">
+            Admin login is available only to approved college accounts.
+          </p>
+        )}
 
         <form onSubmit={handleLogin} className="auth-form">
           <label htmlFor="login-email">Email address</label>
           <input
             id="login-email"
             type="email"
-            placeholder="student@example.com"
+            placeholder="name@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
             required
           />
 
@@ -139,6 +166,7 @@ function Login() {
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
             required
           />
 
@@ -153,7 +181,11 @@ function Login() {
             className="auth-submit-button"
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Log In"}
+            {loading
+              ? "Logging in..."
+              : accountType === "admin"
+                ? "Login as Admin"
+                : "Login as Student"}
           </button>
         </form>
 

@@ -989,3 +989,51 @@ button {
   transform: translateY(-2px);
   box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
 }
+
+
+.auth-account-types {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.auth-account-type {
+  padding: 12px 10px;
+  border: 1px solid #d5deeb;
+  border-radius: 10px;
+  color: #344256;
+  background: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.auth-account-type.active {
+  border-color: #2878e5;
+  color: #145bc0;
+  background: #eaf3ff;
+}
+
+.auth-account-type:focus-visible {
+  outline: 2px solid #2878e5;
+  outline-offset: 3px;
+}
+
+.auth-field-hint {
+  display: block;
+  margin: -4px 0 12px;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.auth-success {
+  color: #16794b;
+  background: #eaf8f0;
+  border-radius: 8px;
+  padding: 10px;
+  line-height: 1.5;
+}
