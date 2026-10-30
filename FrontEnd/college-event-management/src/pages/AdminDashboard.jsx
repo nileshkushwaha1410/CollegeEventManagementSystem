@@ -290,6 +290,14 @@ const filteredEvents = events.filter((event) => {
       <span>Analytics &amp; Reports</span>
     </Link>
 
+    <Link
+  to="/admin-college-approvals"
+  className="admin-quick-link"
+>
+  <span className="admin-link-icon">🏫</span>
+  <span>College Account Approvals</span>
+</Link>
+
     <Link to="/admin-feedback" className="admin-quick-link">
       <span className="admin-link-icon">⭐</span>
       <span>Feedback Reports</span>

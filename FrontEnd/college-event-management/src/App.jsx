@@ -26,6 +26,7 @@ import { EventProvider } from "./context/EventContext";
 
 import { useState } from "react";
 import WelcomeScreen from "./components/WelcomeScreen";
+import AdminCollegeApprovals from "./pages/AdminCollegeApprovals";
 
 function App() {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -68,6 +69,11 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+           <Route
+  path="/admin-college-approvals"
+  element={<AdminCollegeApprovals />}
+/>
 
           {/* Student dashboard */}
           <Route

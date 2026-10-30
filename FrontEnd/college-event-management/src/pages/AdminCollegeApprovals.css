@@ -1,0 +1,122 @@
+
+.college-approval-page {
+  min-height: 100vh;
+  padding: 40px 6%;
+  background: #f4f7fc;
+}
+
+.college-approval-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 35px;
+}
+
+.college-approval-header h1 {
+  margin: 10px 0;
+  color: #172554;
+  font-size: 2rem;
+}
+
+.college-approval-header p {
+  color: #64748b;
+}
+
+.college-approval-section {
+  padding: 28px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.07);
+}
+
+.college-approval-list {
+  display: grid;
+  gap: 18px;
+  margin: 25px 0;
+}
+
+.college-approval-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 22px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.college-approval-details h3 {
+  color: #1e3a8a;
+  margin-bottom: 12px;
+}
+
+.college-approval-details p {
+  color: #475569;
+  margin: 7px 0;
+}
+
+.college-approval-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.college-approval-actions button {
+  padding: 11px 20px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  background: #15803d;
+}
+
+.college-approval-actions button:last-child {
+  background: #dc2626;
+}
+
+.college-approval-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.college-approval-success {
+  color: #15803d;
+  background: #dcfce7;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+.college-approval-error {
+  color: #b91c1c;
+  background: #fee2e2;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+@media (max-width: 600px) {
+  .college-approval-page {
+    padding: 25px 4%;
+  }
+
+  .college-approval-section {
+    padding: 18px;
+  }
+
+  .college-approval-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .college-approval-actions {
+    width: 100%;
+  }
+
+  .college-approval-actions button {
+    flex: 1;
+  }
+}
