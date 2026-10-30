@@ -7,6 +7,7 @@ const connectDB = require("./config/db");
 const eventRoutes = require("./routes/events");
 const authRoutes = require("./routes/auth");
 const registrationRoutes = require("./routes/registrations");
+const adminRoutes = require("./routes/admin");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use("/api/events", eventRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/registrations", registrationRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({
