@@ -1,22 +1,55 @@
 
 import { Link, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useEvents } from "../context/EventContext";
 import "./AdminFeedback.css";
 
-function readFeedback() {
-  try {
-    const data = JSON.parse(
-      localStorage.getItem("eventFeedback") || "[]"
-    );
 
-    return Array.isArray(data) ? data : [];
-  } catch {
-    return [];
-  }
-}
 
 function AdminFeedback() {
   const { events } = useEvents();
+    const [feedback, setFeedback] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+    useEffect(() => {
+    const fetchFeedback = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const token = localStorage.getItem("authToken");
+
+        if (!token) {
+          throw new Error("Admin authentication token not found. Please log in again.");
+        }
+
+        const response = await fetch(
+          "https://college-event-management-system-api.onrender.com/api/feedback/admin/all",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Unable to load feedback.");
+        }
+
+        setFeedback(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Admin feedback loading error:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeedback();
+  }, []);
 
   let currentUser = null;
 
@@ -32,7 +65,6 @@ function AdminFeedback() {
     return <Navigate to="/login" replace />;
   }
 
-  const feedback = readFeedback();
 
   const averageRating =
     feedback.length > 0
@@ -43,9 +75,10 @@ function AdminFeedback() {
       : 0;
 
   const eventSummaries = events.map((event) => {
-    const eventFeedback = feedback.filter(
-      (item) => String(item.eventId) === String(event.id)
-    );
+  const eventFeedback = feedback.filter((item) => {
+    const feedbackEventId = item.event?._id || item.event;
+    return String(feedbackEventId) === String(event.id);
+  });
 
     const average =
       eventFeedback.length > 0
@@ -64,10 +97,10 @@ function AdminFeedback() {
   });
 
   const sortedFeedback = [...feedback].sort(
-    (a, b) =>
-      new Date(b.submittedAt || 0) -
-      new Date(a.submittedAt || 0)
-  );
+  (a, b) =>
+    new Date(b.createdAt || b.updatedAt || 0) -
+    new Date(a.createdAt || a.updatedAt || 0)
+);
 
   function downloadFeedbackCsv() {
     if (feedback.length === 0) {
@@ -97,8 +130,23 @@ function AdminFeedback() {
     const csv = [
       headers.map(escapeCsv).join(","),
       ...feedback.map((item) =>
-        headers.map((key) => escapeCsv(item[key])).join(",")
-      ),
+  headers
+    .map((key) => {
+      const value =
+        key === "eventTitle"
+          ? item.event?.title
+          : key === "studentName"
+          ? item.student?.name
+          : key === "studentEmail"
+          ? item.student?.email
+          : key === "submittedAt"
+          ? item.createdAt
+          : item[key];
+
+      return escapeCsv(value);
+    })
+    .join(",")
+),
     ].join("\r\n");
 
     const blob = new Blob(["\uFEFF", csv], {
@@ -130,7 +178,18 @@ function AdminFeedback() {
         </Link>
       </header>
 
+      {loading && (
+  <p>Loading feedback from the server...</p>
+)}
+
+{error && (
+  <p style={{ color: "red" }}>{error}</p>
+)}
+
       <section className="admin-feedback-stats">
+
+
+
         <article className="admin-feedback-stat">
           <span>Total Feedback</span>
           <strong>{feedback.length}</strong>
@@ -161,6 +220,7 @@ function AdminFeedback() {
             type="button"
             className="login-button"
             onClick={downloadFeedbackCsv}
+            disabled={loading || !!error}
           >
             Export Feedback CSV
           </button>
@@ -205,15 +265,15 @@ function AdminFeedback() {
         ) : (
           <div className="admin-feedback-list">
             {sortedFeedback.map((item, index) => (
-              <article
-                className="admin-feedback-comment"
-                key={item.id || `${item.eventId}-${item.studentId}-${index}`}
-              >
+             <article
+  className="admin-feedback-comment"
+  key={item._id || index}
+>
                 <div className="admin-feedback-comment-heading">
                   <div>
-                    <h3>{item.eventTitle || "Event"}</h3>
-                    <p>{item.studentName || "Student"}</p>
-                    {item.studentEmail && <p>{item.studentEmail}</p>}
+                    <h3>{item.event?.title || "Event"}</h3>
+<p>{item.student?.name || "Student"}</p>
+{item.student?.email && <p>{item.student.email}</p>}
                   </div>
 
                   <strong>
@@ -238,9 +298,9 @@ function AdminFeedback() {
 
                 <small>
                   Submitted:{" "}
-                  {item.submittedAt
-                    ? new Date(item.submittedAt).toLocaleString()
-                    : "Date unavailable"}
+                 {item.createdAt
+  ? new Date(item.createdAt).toLocaleString()
+  : "Date unavailable"}
                 </small>
               </article>
             ))}

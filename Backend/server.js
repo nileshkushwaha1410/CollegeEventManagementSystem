@@ -8,6 +8,8 @@ const eventRoutes = require("./routes/events");
 const authRoutes = require("./routes/auth");
 const registrationRoutes = require("./routes/registrations");
 const adminRoutes = require("./routes/admin");
+const feedbackRoutes = require("./routes/feedback");
+
 
 const app = express();
 
@@ -24,6 +26,8 @@ app.use("/api/events", eventRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/registrations", registrationRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/feedback", feedbackRoutes);
+
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({

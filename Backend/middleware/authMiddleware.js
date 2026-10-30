@@ -1,5 +1,6 @@
 
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
 function protect(req, res, next) {
   try {
@@ -25,14 +26,32 @@ function protect(req, res, next) {
   }
 }
 
-function adminOnly(req, res, next) {
-  if (!req.user || req.user.role !== "admin") {
-    return res.status(403).json({
-      message: "Access denied. Admin permission required.",
+async function adminOnly(req, res, next) {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(403).json({
+        message: "Access denied. Admin permission required.",
+      });
+    }
+
+    const user = await User.findById(req.user.id);
+
+    if (
+      !user ||
+      user.role !== "admin" ||
+      user.adminApprovalStatus !== "approved"
+    ) {
+      return res.status(403).json({
+        message: "Access denied. Admin approval required.",
+      });
+    }
+
+    next();
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server error while checking admin permissions.",
     });
   }
-
-  next();
 }
 
 module.exports = { protect, adminOnly };
